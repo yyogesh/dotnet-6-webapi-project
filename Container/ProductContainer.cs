@@ -1,30 +1,42 @@
 using ASPPRODUCT.Models;
 using Microsoft.EntityFrameworkCore;
+using ASPPRODUCT.Entity;
+using AutoMapper;
 
 namespace ASPPRODUCT.Container;
 
 public class ProductsContainer : IProductContainer
 {
     private readonly LearnContext _learnContext;
-    public ProductsContainer(LearnContext context)
+
+    private readonly IMapper _mapper;
+    public ProductsContainer(LearnContext context, IMapper mapper1)
     {
         this._learnContext = context;
+        this._mapper = mapper1;
     }
-    public async Task<List<TblProduct>> GetAll()
+    public async Task<List<ProductEntity>> GetAll()
     {
-        return await this._learnContext.TblProducts.ToListAsync();
+        List<ProductEntity> resp = new List<ProductEntity>();
+        var product = await this._learnContext.TblProducts.ToListAsync();
+        if (product != null)
+        {
+            resp = _mapper.Map<List<TblProduct>, List<ProductEntity>>(product);
+        }
+        return resp;
     }
 
-    public async Task<TblProduct> GetByCode(int code)
+    public async Task<ProductEntity> GetByCode(int code)
     {
         var product = await this._learnContext.TblProducts.FindAsync(code);
         if (product != null)
         {
-            return product;
+            ProductEntity resp = _mapper.Map<TblProduct, ProductEntity>(product);
+            return resp;
         }
         else
         {
-            return new TblProduct();
+            return new ProductEntity();
         }
     }
 
@@ -43,18 +55,19 @@ public class ProductsContainer : IProductContainer
         }
     }
 
-    public async Task<bool> Save(TblProduct _product)
+    public async Task<bool> Save(ProductEntity _product)
     {
         var product = this._learnContext.TblProducts.FirstOrDefault(o => o.Code == _product.Code);
         if (product != null)
         {
-            product.Name = _product.Name;
-            product.Amount = _product.Amount;
+            product.Name = _product.ProductName;
+            product.Amount = _product.Price;
             await this._learnContext.SaveChangesAsync();
         }
         else
         {
-            this._learnContext.TblProducts.Add(_product);
+            TblProduct _prod = _mapper.Map<ProductEntity, TblProduct>(_product);
+            this._learnContext.TblProducts.Add(_prod);
             await this._learnContext.SaveChangesAsync();
         }
         return true;

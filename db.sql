@@ -1,0 +1,297 @@
+USE [master]
+GO
+/****** Object:  Database [Learn]    Script Date: 21-11-2022 13:58:35 ******/
+CREATE DATABASE [Learn]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'Learn', FILENAME = N'D:\SqlServerExpress\MSSQL15.SQLEXPRESS\MSSQL\DATA\Learn.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'Learn_log', FILENAME = N'D:\SqlServerExpress\MSSQL15.SQLEXPRESS\MSSQL\DATA\Learn_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [Learn] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+    EXEC [Learn].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [Learn] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [Learn] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [Learn] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [Learn] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [Learn] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [Learn] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [Learn] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [Learn] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [Learn] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [Learn] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [Learn] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [Learn] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [Learn] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [Learn] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [Learn] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [Learn] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [Learn] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [Learn] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [Learn] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [Learn] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [Learn] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [Learn] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [Learn] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [Learn] SET  MULTI_USER 
+GO
+ALTER DATABASE [Learn] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [Learn] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [Learn] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [Learn] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [Learn] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [Learn] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [Learn] SET QUERY_STORE = OFF
+GO
+USE [Learn]
+GO
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[__EFMigrationsHistory]
+(
+    [MigrationId] [nvarchar](150) NOT NULL,
+    [ProductVersion] [nvarchar](32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Category]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Category]
+(
+    [Id] [int] IDENTITY(1,1) NOT NULL,
+    [Name] [nvarchar](max) NULL,
+    CONSTRAINT [PK_Category] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_customer]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_customer]
+(
+    [ID] [int] IDENTITY(1,1) NOT NULL,
+    [Name] [varchar](50) NULL,
+    [Email] [varchar](50) NULL,
+    [Phone] [varchar](50) NULL,
+    [CreditLimit] [int] NULL,
+    CONSTRAINT [PK_tbl_customer] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_designation]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_designation]
+(
+    [code] [nvarchar](10) NOT NULL,
+    [Name] [nvarchar](50) NULL,
+    CONSTRAINT [PK_tbl_designation] PRIMARY KEY CLUSTERED 
+(
+	[code] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_employee]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_employee]
+(
+    [code] [int] IDENTITY(1,1) NOT NULL,
+    [name] [varchar](50) NULL,
+    [email] [varchar](50) NULL,
+    [Phone] [varchar](50) NULL,
+    [designation] [varchar](50) NULL,
+    CONSTRAINT [PK_tbl_employee] PRIMARY KEY CLUSTERED 
+(
+	[code] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_menu]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_menu]
+(
+    [Id] [varchar](50) NOT NULL,
+    [Name] [varchar](50) NULL,
+    [LinkName] [varchar](50) NULL,
+    CONSTRAINT [PK_tbl_menu] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_permission]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_permission]
+(
+    [RoleId] [varchar](50) NOT NULL,
+    [MenuId] [varchar](50) NOT NULL,
+    CONSTRAINT [PK_tbl_permission] PRIMARY KEY CLUSTERED 
+(
+	[RoleId] ASC,
+	[MenuId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_product]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_product]
+(
+    [Code] [int] IDENTITY(1,1) NOT NULL,
+    [Name] [varchar](50) NULL,
+    [Amount] [decimal](18, 3) NULL,
+    CONSTRAINT [PK_tbl_product] PRIMARY KEY CLUSTERED 
+(
+	[Code] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_refreshtoken]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_refreshtoken]
+(
+    [UserId] [varchar](50) NOT NULL,
+    [TokenId] [varchar](50) NULL,
+    [RefreshToken] [nvarchar](max) NULL,
+    [IsActive] [bit] NULL,
+    CONSTRAINT [PK_tbl_refreshtoken] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_role]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_role]
+(
+    [roleid] [varchar](50) NOT NULL,
+    [Name] [varchar](50) NULL,
+    CONSTRAINT [PK_tbl_role] PRIMARY KEY CLUSTERED 
+(
+	[roleid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_user]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_user]
+(
+    [userid] [varchar](50) NOT NULL,
+    [Name] [varchar](50) NULL,
+    [password] [varchar](50) NULL,
+    [Email] [varchar](50) NULL,
+    [Role] [varchar](50) NULL,
+    [IsActive] [bit] NULL,
+    CONSTRAINT [PK_tbl_user] PRIMARY KEY CLUSTERED 
+(
+	[userid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[tbl_customer] ADD  DEFAULT ((0)) FOR [CreditLimit]
+GO
+ALTER TABLE [dbo].[tbl_user] ADD  DEFAULT ((1)) FOR [IsActive]
+GO
+/****** Object:  StoredProcedure [dbo].[GetCustomer]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+Create Procedure [dbo].[GetCustomer]
+as
+Begin
+    Select *
+    From tbl_customer
+End
+GO
+/****** Object:  StoredProcedure [dbo].[sp_getallemployee]    Script Date: 21-11-2022 13:58:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE Procedure [dbo].[sp_getallemployee]
+as
+
+begin
+    Select A.code, A.name, A.email, A.Phone, B.Name as designation, B.Name as designation1
+    From tbl_employee A inner Join tbl_designation B on A.designation=B.code
+
+end
+GO
+USE [master]
+GO
+ALTER DATABASE [Learn] SET  READ_WRITE 
+GO

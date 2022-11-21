@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var autoMapper = new AutoMapper.MapperConfiguration(item => item.AddProfile(new AutoMapperHandler()));
+AutoMapper.IMapper mapper = autoMapper.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+var _logger = new LoggerConfiguration()
+.MinimumLevel.Error()
+    .WriteTo.File("D:\\Ysquare\\SEB DOTNET CORE\\ASPPRODUCT\\Log\\ProductINfo-.log", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Logging.AddSerilog(_logger);
 
 var _jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(_jwtSettings);
